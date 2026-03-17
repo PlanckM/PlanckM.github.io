@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TSINGK129 任意进制相互转换 | Kevin的世界</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="http://example.com/2026/03/17/TSINGK129-%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/index.html"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="一、完整带注释代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364#include &amp;lt;algorithm"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Kevin的世界"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon.png"><link rel="apple-touch-icon" href="/img/pwa/favicon.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础<sup>6</sup></a><a href="/tags/%E5%9B%A0%E6%95%B0/">因数<sup>1</sup></a><a href="/tags/%E6%A8%A1%E6%8B%9F/">模拟<sup>6</sup></a><a href="/tags/%E8%BF%9B%E5%88%B6/">进制<sup>2</sup></a><a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串<sup>3</sup></a><a href="/tags/%E6%A0%88/">栈<sup>1</sup></a><a href="/tags/%E6%9F%A5%E6%89%BE/">查找<sup>2</sup></a><a href="/tags/%E6%8E%92%E5%BA%8F/">排序<sup>1</sup></a><a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举<sup>3</sup></a><a href="/tags/%E5%9B%9E%E6%96%87/">回文<sup>1</sup></a><a href="/tags/STL/">STL<sup>2</sup></a><a href="/tags/list/">list<sup>1</sup></a><a href="/tags/vector/">vector<sup>1</sup></a><a href="/tags/%E9%80%92%E5%BD%92/">递归<sup>2</sup></a><a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划<sup>1</sup></a><a href="/tags/%E6%9A%B4%E5%8A%9B/">暴力<sup>1</sup></a><a href="/tags/%E7%B4%A0%E6%95%B0/">素数<sup>2</sup></a><a href="/tags/%E9%98%9F%E5%88%97/">队列<sup>1</sup></a><a href="/tags/deep-learning/">deep learning<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2026/03/"><span class="date">2026/03</span><div class="count-group"><span class="count">45</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">45</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础<sup>6</sup></a><a href="/tags/%E5%9B%A0%E6%95%B0/">因数<sup>1</sup></a><a href="/tags/%E6%A8%A1%E6%8B%9F/">模拟<sup>6</sup></a><a href="/tags/%E8%BF%9B%E5%88%B6/">进制<sup>2</sup></a><a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串<sup>3</sup></a><a href="/tags/%E6%A0%88/">栈<sup>1</sup></a><a href="/tags/%E6%9F%A5%E6%89%BE/">查找<sup>2</sup></a><a href="/tags/%E6%8E%92%E5%BA%8F/">排序<sup>1</sup></a><a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举<sup>3</sup></a><a href="/tags/%E5%9B%9E%E6%96%87/">回文<sup>1</sup></a><a href="/tags/STL/">STL<sup>2</sup></a><a href="/tags/list/">list<sup>1</sup></a><a href="/tags/vector/">vector<sup>1</sup></a><a href="/tags/%E9%80%92%E5%BD%92/">递归<sup>2</sup></a><a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划<sup>1</sup></a><a href="/tags/%E6%9A%B4%E5%8A%9B/">暴力<sup>1</sup></a><a href="/tags/%E7%B4%A0%E6%95%B0/">素数<sup>2</sup></a><a href="/tags/%E9%98%9F%E5%88%97/">队列<sup>1</sup></a><a href="/tags/deep-learning/">deep learning<sup>1</sup></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a href="/" title="返回博客主页" id="site-name"><span class="title">Solitude</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">TSINGK129 任意进制相互转换</a></div></div><div id="menus"></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>数学基础</span></a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>模拟</span></a><a class="post-meta__tags" href="/tags/%E8%BF%9B%E5%88%B6/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>进制</span></a></div></div></div></div><h1 class="post-title">TSINGK129 任意进制相互转换</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><div class="post-radius-bottom"></div><article class="post-content article-container"><h3 id="一、完整带注释代码"><a href="#一、完整带注释代码" class="headerlink" title="一、完整带注释代码"></a>一、完整带注释代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span>  <span class="comment">// 包含reverse函数，用于反转字符串（适配进制转换的逆序结果）</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数功能：将整数（0~35）转换为对应的进制字符（0~9、a~z）</span></span><br><span class="line"><span class="comment">// 参数x：待转换的整数，范围0~35（对应进制最大为36进制，0~9对应数字，10~35对应小写字母）</span></span><br><span class="line"><span class="comment">// 返回值：转换后的字符</span></span><br><span class="line"><span class="function"><span class="type">char</span> <span class="title">IntToChar</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        <span class="comment">// 整数0~9 → 字符&#x27;0&#x27;~&#x27;9&#x27;，利用ASCII码偏移（&#x27;0&#x27;的ASCII码为48，x+48即为对应字符）</span></span><br><span class="line">        <span class="keyword">return</span> x + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 整数10~35 → 字符&#x27;a&#x27;~&#x27;z&#x27;，10对应&#x27;a&#x27;，偏移量为&#x27;a&#x27;-10（&#x27;a&#x27;的ASCII码为97，97-10=87）</span></span><br><span class="line">        <span class="keyword">return</span> x - <span class="number">10</span> + <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数功能：将进制字符（0~9、A~Z）转换为对应的整数（0~35）</span></span><br><span class="line"><span class="comment">// 参数c：待转换的字符，支持数字0~9和大写字母A~Z</span></span><br><span class="line"><span class="comment">// 返回值：转换后的整数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">CharToInt</span><span class="params">(<span class="type">char</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (c &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">        <span class="comment">// 字符&#x27;0&#x27;~&#x27;9&#x27; → 整数0~9，利用ASCII码偏移（c-&#x27;0&#x27;即可得到对应整数）</span></span><br><span class="line">        <span class="keyword">return</span> c - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 字符&#x27;A&#x27;~&#x27;Z&#x27; → 整数10~35，A对应10，偏移量为c-&#x27;A&#x27;+10（&#x27;A&#x27;的ASCII码为65）</span></span><br><span class="line">        <span class="keyword">return</span> c - <span class="string">&#x27;A&#x27;</span> + <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> m, n;  <span class="comment">// m：原进制，n：目标进制（m和n均需满足2≤m、n≤36，适配函数的字符范围）</span></span><br><span class="line">    string s;  <span class="comment">// 存储输入的m进制字符串</span></span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;  <span class="comment">// 输入原进制m、目标进制n</span></span><br><span class="line"></span><br><span class="line">    cin &gt;&gt; s;  <span class="comment">// 输入m进制的字符串（可包含0~9、A~Z）</span></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> num = <span class="number">0</span>;  <span class="comment">// 存储转换后的十进制中间值（用long long避免数据溢出）</span></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> weight = <span class="number">1</span>;  <span class="comment">// 权重，初始为m^0=1（从字符串末尾，即最低位开始计算）</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一步：将m进制字符串转换为十进制整数（核心：按权重累加）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = s.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">// 1. 将当前字符转为整数；2. 乘以当前位的权重（m^i，i从0开始）；3. 累加到十进制结果中</span></span><br><span class="line">        num += <span class="built_in">CharToInt</span>(s[i]) * weight;</span><br><span class="line">        weight *= m;  <span class="comment">// 权重更新，每向左一位，权重乘以m（如m=16时，权重依次为1、16、256...）</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    string res;  <span class="comment">// 存储最终的n进制字符串结果</span></span><br><span class="line">    <span class="keyword">if</span> (num == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 特殊处理：若十进制中间值为0，说明原m进制字符串为&quot;0&quot;，目标进制结果也为&quot;0&quot;</span></span><br><span class="line">        res = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 第二步：将十进制整数转换为n进制字符串（核心：除n取余法）</span></span><br><span class="line">        <span class="keyword">while</span> (num) &#123;</span><br><span class="line">            <span class="comment">// 1. 取num除以n的余数（对应n进制的当前位）；2. 将余数转为字符，存入结果字符串</span></span><br><span class="line">            res.<span class="built_in">push_back</span>(<span class="built_in">IntToChar</span>(num % n));</span><br><span class="line">            num = num / n;  <span class="comment">// 去掉已处理的最低位，更新num，进入下一轮循环</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 注意：除n取余法得到的是n进制的逆序结果，需反转字符串得到正确顺序</span></span><br><span class="line">    <span class="built_in">reverse</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>());</span><br><span class="line">    cout &lt;&lt; res &lt;&lt; endl;  <span class="comment">// 输出转换后的n进制字符串</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二、代码实现思想"><a href="#二、代码实现思想" class="headerlink" title="二、代码实现思想"></a>二、代码实现思想</h3><p>核心目标：实现<strong>任意进制（m进制）到任意进制（n进制）的转换</strong>（m、n范围2~36），核心思路是“两步转换法”——先将m进制转为十进制（中间过渡），再将十进制转为n进制，避免直接转换的复杂逻辑，提升可读性和通用性。</p>
+<p>整体流程：输入m（原进制）、n（目标进制）→ 输入m进制字符串 → m进制转十进制 → 十进制转n进制 → 输出n进制字符串。</p>
+<p>\1. 辅助函数设计（核心：字符与整数的映射）：</p>
+<ul>
+<li>IntToChar函数：适配0~35的整数，对应转换为0~9、a~z的字符，满足36进制以内的转换需求（36进制用0~9、a~z表示所有位）。利用ASCII码偏移实现转换，逻辑简洁、高效，无需复杂的条件判断。</li>
+<li>CharToInt函数：适配0~9、A~Z的字符，对应转换为0~35的整数，支持输入的m进制字符串包含大写字母（日常输入中，进制字符串常用大写字母表示10以上的位），同样通过ASCII码偏移实现转换，与IntToChar函数形成双向映射。</li>
+</ul>
+<p>\2. 第一步：m进制转十进制（核心：按权重累加）</p>
+<ul>
+<li>原理：任何进制的数字，都可以表示为“每一位数字 × 进制^权重”的和（权重从0开始，从右向左递增）。例如：16进制的”1A” = 1×16^1 + 10×16^0 = 26（十进制）。</li>
+<li>逻辑：从m进制字符串的末尾（最低位，权重为m^0=1）开始遍历，每一位字符先转为整数，乘以当前权重，累加到十进制变量num中，再将权重乘以m，依次处理每一位，最终得到十进制结果。</li>
+<li>注意：使用long long类型存储num和weight，避免m较大（如36）、字符串较长时，权重累积过大导致数据溢出。</li>
+</ul>
+<p>\3. 第二步：十进制转n进制（核心：除n取余法）</p>
+<ul>
+<li>原理：沿用通用进制转换的“除基取余法”，基为n，即“除以n取余数，逆序排列余数”，得到n进制结果。例如：十进制26转16进制，26÷16=1余10（A），1÷16=0余1，逆序排列余数得到”1A”。</li>
+<li>逻辑：若十进制num为0，直接返回”0”（特殊处理，避免循环无输出）；否则循环执行“取余→转字符→存结果→整除n”，直到num为0。由于取余得到的是n进制的逆序结果，最后需用reverse函数反转字符串，得到正确的n进制顺序。</li>
+</ul>
+<p>\4. 代码优势与注意事项：</p>
+<ul>
+<li>通用性强：支持2~36进制之间的任意转换，适配绝大多数日常进制转换场景（如二进制、八进制、十进制、十六进制）。</li>
+<li>逻辑清晰：通过“中间十进制过渡”，将复杂的跨进制转换拆分为两个简单步骤，便于理解和维护；辅助函数与主逻辑分离，模块化程度高。</li>
+<li>注意点：输入的m进制字符串需符合规范（仅包含0~9、A~Z），且m、n需在2~36范围内，否则会出现转换错误；long long类型的使用的是为了避免数据溢出，适配更长的进制字符串。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Kevin</div><div class="post-copyright__author_desc">向死而生</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Kevin的世界</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>数学基础<span class="tagsPageCount">6</span></span></a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>模拟<span class="tagsPageCount">6</span></span></a><a class="post-meta__tags" href="/tags/%E8%BF%9B%E5%88%B6/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>进制<span class="tagsPageCount">2</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/03/17/3530-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">3530. 二进制数</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/logo.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Kevin</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%8C%E6%95%B4%E5%B8%A6%E6%B3%A8%E9%87%8A%E4%BB%A3%E7%A0%81"><span class="toc-text">一、完整带注释代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E6%80%9D%E6%83%B3"><span class="toc-text">二、代码实现思想</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2026/03/17/TSINGK129-%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/" title="TSINGK129 任意进制相互转换"><div class="content"><span class="title" href="/2026/03/17/TSINGK129-%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/" title="TSINGK129 任意进制相互转换">TSINGK129 任意进制相互转换</span></div></a><a class="aside-list-item" href="/2026/03/17/3530-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0/" title="3530. 二进制数"><div class="content"><span class="title" href="/2026/03/17/3530-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0/" title="3530. 二进制数">3530. 二进制数</span></div></a><a class="aside-list-item" href="/2026/03/17/%E4%BE%8B%E9%A2%981201%E8%B4%A8%E6%95%B0%EF%BC%88%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%A4%8D%E8%AF%95%E4%B8%8A%E6%9C%BA%E9%A2%98%EF%BC%89/" title="例题1201质数（清华大学复试上机题）"><div class="content"><span class="title" href="/2026/03/17/%E4%BE%8B%E9%A2%981201%E8%B4%A8%E6%95%B0%EF%BC%88%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%A4%8D%E8%AF%95%E4%B8%8A%E6%9C%BA%E9%A2%98%EF%BC%89/" title="例题1201质数（清华大学复试上机题）">例题1201质数（清华大学复试上机题）</span></div></a><a class="aside-list-item" href="/2026/03/17/%E4%B9%A0%E9%A2%980603%E5%85%A8%E6%8E%92%E5%88%97%EF%BC%88%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E5%A4%8D%E8%AF%95%E4%B8%8A%E6%9C%BA%E9%A2%98%EF%BC%89/" title="习题0603全排列（北京大学复试上机题）"><div class="content"><span class="title" href="/2026/03/17/%E4%B9%A0%E9%A2%980603%E5%85%A8%E6%8E%92%E5%88%97%EF%BC%88%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E5%A4%8D%E8%AF%95%E4%B8%8A%E6%9C%BA%E9%A2%98%EF%BC%89/" title="习题0603全排列（北京大学复试上机题）">习题0603全排列（北京大学复试上机题）</span></div></a><a class="aside-list-item" href="/2026/03/16/%E4%B9%A0%E9%A2%980601%E9%AA%A8%E7%89%8C-%E5%A4%8D%E6%97%A6%E5%A4%A7%E5%AD%A6%E5%A4%8D%E8%AF%95%E4%B8%8A%E6%9C%BA%E9%A2%98/" title="习题0601骨牌(复旦大学复试上机题)"><div class="content"><span class="title" href="/2026/03/16/%E4%B9%A0%E9%A2%980601%E9%AA%A8%E7%89%8C-%E5%A4%8D%E6%97%A6%E5%A4%A7%E5%AD%A6%E5%A4%8D%E8%AF%95%E4%B8%8A%E6%9C%BA%E9%A2%98/" title="习题0601骨牌(复旦大学复试上机题)">习题0601骨牌(复旦大学复试上机题)</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2026 By<a class="footer-bar-link" href="/" title="Kevin">Kevin</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="/js/tw_cn.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/copy-tex.min.js"><script>(() => {
+  document.querySelectorAll('.article-container span.katex-display').forEach(item => {
+    utils.wrap(item, 'div', {class: 'katex-wrap'})
+  })
+})();
+</script></script><!-- UI enhancement scripts--><script defer src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><!-- Music player scripts--><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><div class="js-pjax"></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--></body></html>
+        <script>
+            const posts = ["2026/03/17/TSINGK129-任意进制相互转换/","2026/03/17/3530-二进制数/","2026/03/17/例题1201质数（清华大学复试上机题）/","2026/03/17/习题0603全排列（北京大学复试上机题）/","2026/03/16/习题0601骨牌-复旦大学复试上机题/","2026/03/16/例题0601不连续1的子串-中山大学复试上机题/","2026/03/16/例题0600跳台阶-复旦大学复试上机题/","2026/03/12/3678-模拟出入栈游戏/","2026/03/12/KY179-堆栈的使用/","2026/03/12/习题0110Hello-World-for-U（浙江大学复试上机题）/","2026/03/12/例题0104叠筐-（HDU-2074）/","2026/03/12/例题0103打印数字菱形/","2026/03/12/习题0108买房子（北京大学复试上机题）/","2026/03/12/习题0106递推数列（清华大学复试上机题）/","2026/03/12/习题0105特殊乘法（清华大学复试上机题）/","2026/03/12/XXX定律-（浙江大学复试上机题）/","2026/03/12/old bill/","2026/03/12/水仙花数/","2026/03/12/素数和半素数的判断/","2026/03/11/3377-约数的个数/","2026/03/11/TSINGK131-对称平方数1/","2026/03/11/PKUKY122-与7无关的数/","2026/03/11/list常用工具函数实现教学/","2026/03/11/vector常用工具函数实现教学/","2026/03/09/排队打饭/","2026/03/08/3254-约瑟夫问题No-2/","2026/03/08/PKUKY129-首字母大写/","2026/03/07/PKUKY117-skew数/","2026/03/07/SJUKY122-字母统计/","2026/03/07/3608-大整数排序/","2026/03/07/3544-寻找变化前的01序列/","2026/03/07/3405-W的密码/","2026/03/07/PKUKY150-浮点数加法/","2026/03/07/3615-单词个数统计/","2026/03/06/3437-打印极值点下标/","2026/03/06/KY197 找最小数/","2026/03/06/找位置/","2026/03/06/3542-查找/","2026/03/06/找X/","2026/03/06/ZJUKY101-奥运排序问题/","2026/03/06/PKUKY109-小白鼠排队/","2026/03/05/测试数学公式/","2026/03/05/深度学习心得笔记/","2026/03/05/深度学习笔记/","2026/03/05/hello-world/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
