@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>这是今年的星期几？ | Kevin的世界</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="http://example.com/2026/03/22/%E8%BF%99%E6%98%AF%E4%BB%8A%E5%B9%B4%E7%9A%84%E6%98%9F%E6%9C%9F%E5%87%A0%EF%BC%9F/index.html"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="一、带完整详细注释的可运行代码 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Kevin的世界"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon.png"><link rel="apple-touch-icon" href="/img/pwa/favicon.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/%E6%A8%A1%E6%8B%9F/">模拟<sup>9</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础<sup>10</sup></a><a href="/tags/%E5%9B%A0%E6%95%B0/">因数<sup>1</sup></a><a href="/tags/%E5%9B%BE/">图<sup>1</sup></a><a href="/tags/%E6%A0%91/">树<sup>1</sup></a><a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集<sup>3</sup></a><a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划<sup>3</sup></a><a href="/tags/%E9%80%92%E5%BD%92/">递归<sup>4</sup></a><a href="/tags/%E8%BF%9B%E5%88%B6/">进制<sup>2</sup></a><a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串<sup>3</sup></a><a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习<sup>3</sup></a><a href="/tags/CNN/">CNN<sup>1</sup></a><a href="/tags/%E6%97%A5%E6%9C%9F%E9%97%AE%E9%A2%98/">日期问题<sup>3</sup></a><a href="/tags/%E6%A0%88/">栈<sup>1</sup></a><a href="/tags/%E6%9F%A5%E6%89%BE/">查找<sup>2</sup></a><a href="/tags/%E6%8E%92%E5%BA%8F/">排序<sup>1</sup></a><a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举<sup>3</sup></a><a href="/tags/%E5%9B%9E%E6%96%87/">回文<sup>1</sup></a><a href="/tags/%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/">连通分量<sup>1</sup></a><a href="/tags/STL/">STL<sup>2</sup></a><a href="/tags/list/">list<sup>1</sup></a><a href="/tags/vector/">vector<sup>1</sup></a><a href="/tags/%E6%9A%B4%E5%8A%9B/">暴力<sup>1</sup></a><a href="/tags/%E7%B4%A0%E6%95%B0/">素数<sup>3</sup></a><a href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/">快速幂<sup>2</sup></a><a href="/tags/%E9%98%9F%E5%88%97/">队列<sup>1</sup></a><a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">最小生成树<sup>1</sup></a><a href="/tags/Kruskal/">Kruskal<sup>1</sup></a><a href="/tags/%E5%9B%A0%E5%AD%90/">因子<sup>1</sup></a><a href="/tags/deep-learning/">deep learning<sup>1</sup></a><a href="/tags/%E7%9F%A9%E9%98%B5/">矩阵<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2026/03/"><span class="date">2026/03</span><div class="count-group"><span class="count">62</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">62</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/%E6%A8%A1%E6%8B%9F/">模拟<sup>9</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础<sup>10</sup></a><a href="/tags/%E5%9B%A0%E6%95%B0/">因数<sup>1</sup></a><a href="/tags/%E5%9B%BE/">图<sup>1</sup></a><a href="/tags/%E6%A0%91/">树<sup>1</sup></a><a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集<sup>3</sup></a><a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划<sup>3</sup></a><a href="/tags/%E9%80%92%E5%BD%92/">递归<sup>4</sup></a><a href="/tags/%E8%BF%9B%E5%88%B6/">进制<sup>2</sup></a><a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串<sup>3</sup></a><a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习<sup>3</sup></a><a href="/tags/CNN/">CNN<sup>1</sup></a><a href="/tags/%E6%97%A5%E6%9C%9F%E9%97%AE%E9%A2%98/">日期问题<sup>3</sup></a><a href="/tags/%E6%A0%88/">栈<sup>1</sup></a><a href="/tags/%E6%9F%A5%E6%89%BE/">查找<sup>2</sup></a><a href="/tags/%E6%8E%92%E5%BA%8F/">排序<sup>1</sup></a><a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举<sup>3</sup></a><a href="/tags/%E5%9B%9E%E6%96%87/">回文<sup>1</sup></a><a href="/tags/%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/">连通分量<sup>1</sup></a><a href="/tags/STL/">STL<sup>2</sup></a><a href="/tags/list/">list<sup>1</sup></a><a href="/tags/vector/">vector<sup>1</sup></a><a href="/tags/%E6%9A%B4%E5%8A%9B/">暴力<sup>1</sup></a><a href="/tags/%E7%B4%A0%E6%95%B0/">素数<sup>3</sup></a><a href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/">快速幂<sup>2</sup></a><a href="/tags/%E9%98%9F%E5%88%97/">队列<sup>1</sup></a><a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">最小生成树<sup>1</sup></a><a href="/tags/Kruskal/">Kruskal<sup>1</sup></a><a href="/tags/%E5%9B%A0%E5%AD%90/">因子<sup>1</sup></a><a href="/tags/deep-learning/">deep learning<sup>1</sup></a><a href="/tags/%E7%9F%A9%E9%98%B5/">矩阵<sup>1</sup></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a href="/" title="返回博客主页" id="site-name"><span class="title">Solitude</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">这是今年的星期几？</a></div></div><div id="menus"></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>模拟</span></a><a class="post-meta__tags" href="/tags/%E6%97%A5%E6%9C%9F%E9%97%AE%E9%A2%98/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>日期问题</span></a></div></div></div></div><h1 class="post-title">这是今年的星期几？</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><div class="post-radius-bottom"></div><article class="post-content article-container"><h1>一、带完整详细注释的可运行代码</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief 计算当前日期的下一天，仅适配2012年（闰年），固定月份天数</span></span><br><span class="line"><span class="comment"> * @param month 当前月份，引用传参，函数内修改直接同步外部变量</span></span><br><span class="line"><span class="comment"> * @param day 当前日期，引用传参，函数内修改直接同步外部变量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">next_day</span><span class="params">(<span class="type">int</span> &amp;month, <span class="type">int</span> &amp;day)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 2012年为闰年，2月有29天，定义数组存储1-12月天数，下标0空置，下标1-12对应1-12月</span></span><br><span class="line">    <span class="type">int</span> months[<span class="number">13</span>] = &#123;<span class="number">0</span>, <span class="number">31</span>, <span class="number">29</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>&#125;;</span><br><span class="line">    <span class="comment">// 日期加1，向后推进一天</span></span><br><span class="line">    day++;</span><br><span class="line">    <span class="comment">// 判断当前日期是否超过当月总天数，若超出则月份进位</span></span><br><span class="line">    <span class="keyword">if</span> (day &gt; months[month]) &#123;</span><br><span class="line">        <span class="comment">// 日期重置为当月1号</span></span><br><span class="line">        day = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 月份加1，进入下一个月</span></span><br><span class="line">        month++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief 根据数字映射对应星期几，输出中文星期名称</span></span><br><span class="line"><span class="comment"> * @param date 星期数字编码（0-6），0=周日，1=周一，...，6=周六</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print_date</span><span class="params">(<span class="type">int</span> date)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 多分支判断，匹配数字对应星期，直接输出结果</span></span><br><span class="line">    <span class="keyword">if</span>(date == <span class="number">0</span>) cout &lt;&lt; <span class="string">&quot;Sunday&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(date == <span class="number">1</span>) cout &lt;&lt; <span class="string">&quot;Monday&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(date == <span class="number">2</span>) cout &lt;&lt; <span class="string">&quot;Tuesday&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(date == <span class="number">3</span>) cout &lt;&lt; <span class="string">&quot;Wednesday&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(date == <span class="number">4</span>) cout &lt;&lt; <span class="string">&quot;Thursday&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(date == <span class="number">5</span>) cout &lt;&lt; <span class="string">&quot;Friday&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(date == <span class="number">6</span>) cout &lt;&lt; <span class="string">&quot;Saturday&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 定义变量接收用户输入的目标月份m和目标日期d</span></span><br><span class="line">    <span class="type">int</span> m, d;</span><br><span class="line">    <span class="comment">// 循环读取多组输入，支持连续查询多个日期的星期</span></span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; m &gt;&gt; d) &#123;</span><br><span class="line">        <span class="comment">// 固定起始日期：2012年4月12日</span></span><br><span class="line">        <span class="type">int</span> month = <span class="number">4</span>;</span><br><span class="line">        <span class="type">int</span> day = <span class="number">12</span>;</span><br><span class="line">        <span class="comment">// 固定起始星期：2012年4月12日对应星期四，数字编码为4</span></span><br><span class="line">        <span class="type">int</span> date = <span class="number">4</span>;</span><br><span class="line">        <span class="comment">// 计数器：记录从起始日期到目标日期的间隔天数（不含起始日，含目标日）</span></span><br><span class="line">        <span class="type">int</span> count_days = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 死循环，直到匹配到目标日期才跳出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="comment">// 终止条件：当前递推日期与用户输入的目标日期完全匹配</span></span><br><span class="line">            <span class="keyword">if</span> (month == m &amp;&amp; day == d) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 未匹配目标日期，调用函数递推至下一天</span></span><br><span class="line">            <span class="built_in">next_day</span>(month, day);</span><br><span class="line">            <span class="comment">// 每递推一天，间隔天数加1</span></span><br><span class="line">            count_days++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算目标星期编码：起始星期 + 间隔天数，对7取余（一周7天循环）</span></span><br><span class="line">        <span class="type">int</span> res = (date + count_days) % <span class="number">7</span>;</span><br><span class="line">        <span class="comment">// 调用函数，将数字编码转为星期名称并输出</span></span><br><span class="line">        <span class="built_in">print_date</span>(res);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 程序正常结束</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>二、代码实现思想</h1>
+<h2 id="1-核心功能定位">1. 核心功能定位</h2>
+<p>本代码<strong>专为2012年设计</strong>，核心功能是：用户输入2012年任意一个月份和日期，程序自动推算出该日期对应的星期几，支持多组输入连续查询，基于固定起始日期（2012年4月12日，星期四），通过逐天递推计算间隔天数，再利用星期7天循环的规则算出目标星期，逻辑简单直白，适合入门级日期与星期推算练习。</p>
+<h2 id="2-整体设计思路与执行流程">2. 整体设计思路与执行流程</h2>
+<h3 id="（1）前提设定：固定年份与基准日期">（1）前提设定：固定年份与基准日期</h3>
+<p>代码限定仅适配2012年，提前确定2012年为闰年（2月29天），同时锁定<strong>基准日期：2012年4月12日，基准星期：星期四（编码4）</strong>，所有日期推算均以此为起点，无需动态判断其他年份，简化计算逻辑。</p>
+<h3 id="（2）核心工具函数1：next-day日期递推">（2）核心工具函数1：next_day日期递推</h3>
+<p>该函数负责将当前日期往后推一天，采用<strong>引用传参</strong>，直接修改主函数里的月份和日期变量，不用返回值，高效同步数据。函数内部内置2012年全年12个月的固定天数数组，处理日期超当月天数的边界情况，自动将日期重置为1号、月份进一位，完成跨月递推（因限定2012年，无需处理跨年逻辑）。</p>
+<h3 id="（3）核心工具函数2：print-date星期映射">（3）核心工具函数2：print_date星期映射</h3>
+<p>采用数字编码对应星期的方式，0代表周日、1-6分别代表周一到周六，通过多分支if-else判断，将计算出的数字编码直接转换为英文星期名称输出，实现数字到文字的映射，符合日常星期阅读习惯。</p>
+<h3 id="（4）主函数逻辑：输入-计算-输出全流程">（4）主函数逻辑：输入-计算-输出全流程</h3>
+<ol>
+<li><strong>输入读取</strong>：通过while循环持续读取用户输入的目标月份m和日期d，支持多组输入，直到手动终止输入；</li>
+<li><strong>初始化参数</strong>：重置基准日期（4月12日）、基准星期编码（4）、间隔天数计数器（0）；</li>
+<li><strong>逐天递推</strong>：开启死循环，不断调用next_day函数往后推日期，每推一天计数器加1，直到当前日期和目标日期一致，跳出循环；</li>
+<li><strong>星期计算</strong>：利用“一周7天循环”规则，用基准星期编码加上总间隔天数，对7取余，得到目标日期的星期编码；</li>
+<li><strong>结果输出</strong>：调用print_date函数，将星期编码转为对应星期名称并打印。</li>
+</ol>
+<h2 id="3-关键逻辑与知识点">3. 关键逻辑与知识点</h2>
+<ul>
+<li><strong>引用传参</strong>：函数参数加&amp;，函数内对month和day的修改会直接同步到主函数，避免值传递的变量拷贝，保证日期递推连贯；</li>
+<li><strong>闰年固定适配</strong>：2012年是闰年，直接在数组里写死2月29天，不用额外写闰年判断逻辑，代码更简洁；</li>
+<li><strong>星期循环规则</strong>：一周共7天，星期编码累加后对7取余，实现星期的循环往复，是日期推算星期的核心算法；</li>
+<li><strong>间隔天数计算</strong>：计数器从0开始，递推一次加1，最终统计的是<strong>基准日期到目标日期的间隔天数（不含基准日，含目标日）</strong>，保证星期计算准确。</li>
+</ul>
+<h2 id="4-适用范围与注意事项">4. 适用范围与注意事项</h2>
+<p><strong>核心限制</strong>：代码<strong>仅适用于2012年</strong>，更换年份会导致月份天数、基准星期全部出错，无法通用；</p>
+<p><strong>输入要求</strong>：用户必须输入2012年合法的月份（1-12）和日期（对应月份的有效天数），输入非法日期会导致死循环；</p>
+<p><strong>基准固定</strong>：起始日期和星期是硬编码写死的，不可随意修改，否则结果全部错误。</p>
+<p><strong>优点</strong>：逻辑极简、代码量小、无复杂运算，入门极易理解，针对性解决2012年日期查星期的需求；</p>
+<p><strong>缺点</strong>：通用性极差，仅适配单一年份，无非法输入校验，适合练习不适合工程使用。</p>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Kevin</div><div class="post-copyright__author_desc">向死而生</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Kevin的世界</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>模拟<span class="tagsPageCount">9</span></span></a><a class="post-meta__tags" href="/tags/%E6%97%A5%E6%9C%9F%E9%97%AE%E9%A2%98/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>日期问题<span class="tagsPageCount">3</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/03/22/%E6%95%B0%E7%9A%84%E5%90%84%E5%9B%A0%E5%AD%90%E4%B9%8B%E5%92%8C/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数的各因子之和</div></div></a></div><div class="next-post pull-right"><a href="/2026/03/22/KY110-%E6%97%A5%E6%9C%9F%E5%B7%AE%E5%80%BC/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">KY110 日期差值</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/logo.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Kevin</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、带完整详细注释的可运行代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、代码实现思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%AE%9A%E4%BD%8D"><span class="toc-text">1. 核心功能定位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E4%B8%8E%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">2. 整体设计思路与执行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%89%8D%E6%8F%90%E8%AE%BE%E5%AE%9A%EF%BC%9A%E5%9B%BA%E5%AE%9A%E5%B9%B4%E4%BB%BD%E4%B8%8E%E5%9F%BA%E5%87%86%E6%97%A5%E6%9C%9F"><span class="toc-text">（1）前提设定：固定年份与基准日期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B01%EF%BC%9Anext-day%E6%97%A5%E6%9C%9F%E9%80%92%E6%8E%A8"><span class="toc-text">（2）核心工具函数1：next_day日期递推</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B02%EF%BC%9Aprint-date%E6%98%9F%E6%9C%9F%E6%98%A0%E5%B0%84"><span class="toc-text">（3）核心工具函数2：print_date星期映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E4%B8%BB%E5%87%BD%E6%95%B0%E9%80%BB%E8%BE%91%EF%BC%9A%E8%BE%93%E5%85%A5-%E8%AE%A1%E7%AE%97-%E8%BE%93%E5%87%BA%E5%85%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">（4）主函数逻辑：输入-计算-输出全流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B3%E9%94%AE%E9%80%BB%E8%BE%91%E4%B8%8E%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">3. 关键逻辑与知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">4. 适用范围与注意事项</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2026/03/22/%E6%95%B0%E7%9A%84%E5%90%84%E5%9B%A0%E5%AD%90%E4%B9%8B%E5%92%8C/" title="数的各因子之和"><div class="content"><span class="title" href="/2026/03/22/%E6%95%B0%E7%9A%84%E5%90%84%E5%9B%A0%E5%AD%90%E4%B9%8B%E5%92%8C/" title="数的各因子之和">数的各因子之和</span></div></a><a class="aside-list-item" href="/2026/03/22/%E8%BF%99%E6%98%AF%E4%BB%8A%E5%B9%B4%E7%9A%84%E6%98%9F%E6%9C%9F%E5%87%A0%EF%BC%9F/" title="这是今年的星期几？"><div class="content"><span class="title" href="/2026/03/22/%E8%BF%99%E6%98%AF%E4%BB%8A%E5%B9%B4%E7%9A%84%E6%98%9F%E6%9C%9F%E5%87%A0%EF%BC%9F/" title="这是今年的星期几？">这是今年的星期几？</span></div></a><a class="aside-list-item" href="/2026/03/22/KY110-%E6%97%A5%E6%9C%9F%E5%B7%AE%E5%80%BC/" title="KY110 日期差值"><div class="content"><span class="title" href="/2026/03/22/KY110-%E6%97%A5%E6%9C%9F%E5%B7%AE%E5%80%BC/" title="KY110 日期差值">KY110 日期差值</span></div></a><a class="aside-list-item" href="/2026/03/22/HUSTKY118-%E6%89%93%E5%8D%B0%E6%97%A5%E6%9C%9F/" title="HUSTKY118 打印日期"><div class="content"><span class="title" href="/2026/03/22/HUSTKY118-%E6%89%93%E5%8D%B0%E6%97%A5%E6%9C%9F/" title="HUSTKY118 打印日期">HUSTKY118 打印日期</span></div></a><a class="aside-list-item" href="/2026/03/22/KY18-%E4%BB%8A%E5%B9%B4%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9%EF%BC%9F/" title="KY18 今年的第几天？"><div class="content"><span class="title" href="/2026/03/22/KY18-%E4%BB%8A%E5%B9%B4%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9%EF%BC%9F/" title="KY18 今年的第几天？">KY18 今年的第几天？</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2026 By<a class="footer-bar-link" href="/" title="Kevin">Kevin</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="/js/tw_cn.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/copy-tex.min.js"><script>(() => {
+  document.querySelectorAll('.article-container span.katex-display').forEach(item => {
+    utils.wrap(item, 'div', {class: 'katex-wrap'})
+  })
+})();
+</script></script><!-- UI enhancement scripts--><script defer src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><!-- Music player scripts--><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><div class="js-pjax"></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--></body></html>
+        <script>
+            const posts = ["2026/03/22/数的各因子之和/","2026/03/22/这是今年的星期几？/","2026/03/22/KY110-日期差值/","2026/03/22/HUSTKY118-打印日期/","2026/03/22/KY18-今年的第几天？/","2026/03/22/数据集的下载和读取/","2026/03/22/图像预处理函数/","2026/03/22/CNN/","2026/03/21/最小生成树构造/","2026/03/20/SJUKY126-第一题/","2026/03/20/3409-这是一棵树吗/","2026/03/20/ZJUKY110-畅通工程/","2026/03/20/PKUKY120-吃糖果/","2026/03/20/3428-放苹果/","2026/03/19/质因子数个数/","2026/03/19/矩阵快速幂/","2026/03/19/快速幂/","2026/03/17/TSINGK129-任意进制相互转换/","2026/03/17/3530-二进制数/","2026/03/17/例题1201质数（清华大学复试上机题）/","2026/03/17/习题0603全排列（北京大学复试上机题）/","2026/03/16/习题0601骨牌-复旦大学复试上机题/","2026/03/16/例题0601不连续1的子串-中山大学复试上机题/","2026/03/16/例题0600跳台阶-复旦大学复试上机题/","2026/03/12/3678-模拟出入栈游戏/","2026/03/12/KY179-堆栈的使用/","2026/03/12/习题0110Hello-World-for-U（浙江大学复试上机题）/","2026/03/12/例题0104叠筐-（HDU-2074）/","2026/03/12/例题0103打印数字菱形/","2026/03/12/习题0108买房子（北京大学复试上机题）/","2026/03/12/习题0106递推数列（清华大学复试上机题）/","2026/03/12/习题0105特殊乘法（清华大学复试上机题）/","2026/03/12/XXX定律-（浙江大学复试上机题）/","2026/03/12/old bill/","2026/03/12/水仙花数/","2026/03/12/素数和半素数的判断/","2026/03/11/3377-约数的个数/","2026/03/11/TSINGK131-对称平方数1/","2026/03/11/PKUKY122-与7无关的数/","2026/03/11/list常用工具函数实现教学/","2026/03/11/vector常用工具函数实现教学/","2026/03/09/排队打饭/","2026/03/08/3254-约瑟夫问题No-2/","2026/03/08/PKUKY129-首字母大写/","2026/03/07/PKUKY117-skew数/","2026/03/07/SJUKY122-字母统计/","2026/03/07/3608-大整数排序/","2026/03/07/3544-寻找变化前的01序列/","2026/03/07/3405-W的密码/","2026/03/07/PKUKY150-浮点数加法/","2026/03/07/3615-单词个数统计/","2026/03/06/3437-打印极值点下标/","2026/03/06/KY197 找最小数/","2026/03/06/找位置/","2026/03/06/3542-查找/","2026/03/06/找X/","2026/03/06/ZJUKY101-奥运排序问题/","2026/03/06/PKUKY109-小白鼠排队/","2026/03/05/测试数学公式/","2026/03/05/深度学习心得笔记/","2026/03/05/深度学习笔记/","2026/03/05/hello-world/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

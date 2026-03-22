@@ -1,0 +1,423 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>pytorch数据集的下载和读取 | Kevin的世界</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="http://example.com/2026/03/22/%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E8%AF%BB%E5%8F%96/index.html"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="PyTorch 数据集 + 数据加载 超清晰入门讲解 完全按照你现在的代码来讲，从零开始、一步到位、专门给新手，学完你就能彻底看懂这段代码，也能自己写。 我分成 3 个核心部分： datasets 是什么？干什么用？ DataLoader 是什么？干什么用？ 逐行解释你这段代码 一、先搞懂：为什"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Kevin的世界"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon.png"><link rel="apple-touch-icon" href="/img/pwa/favicon.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/%E6%A8%A1%E6%8B%9F/">模拟<sup>9</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础<sup>10</sup></a><a href="/tags/%E5%9B%A0%E6%95%B0/">因数<sup>1</sup></a><a href="/tags/%E5%9B%BE/">图<sup>1</sup></a><a href="/tags/%E6%A0%91/">树<sup>1</sup></a><a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集<sup>3</sup></a><a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划<sup>3</sup></a><a href="/tags/%E9%80%92%E5%BD%92/">递归<sup>4</sup></a><a href="/tags/%E8%BF%9B%E5%88%B6/">进制<sup>2</sup></a><a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串<sup>3</sup></a><a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习<sup>3</sup></a><a href="/tags/CNN/">CNN<sup>1</sup></a><a href="/tags/%E6%97%A5%E6%9C%9F%E9%97%AE%E9%A2%98/">日期问题<sup>3</sup></a><a href="/tags/%E6%A0%88/">栈<sup>1</sup></a><a href="/tags/%E6%9F%A5%E6%89%BE/">查找<sup>2</sup></a><a href="/tags/%E6%8E%92%E5%BA%8F/">排序<sup>1</sup></a><a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举<sup>3</sup></a><a href="/tags/%E5%9B%9E%E6%96%87/">回文<sup>1</sup></a><a href="/tags/%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/">连通分量<sup>1</sup></a><a href="/tags/STL/">STL<sup>2</sup></a><a href="/tags/list/">list<sup>1</sup></a><a href="/tags/vector/">vector<sup>1</sup></a><a href="/tags/%E6%9A%B4%E5%8A%9B/">暴力<sup>1</sup></a><a href="/tags/%E7%B4%A0%E6%95%B0/">素数<sup>3</sup></a><a href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/">快速幂<sup>2</sup></a><a href="/tags/%E9%98%9F%E5%88%97/">队列<sup>1</sup></a><a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">最小生成树<sup>1</sup></a><a href="/tags/Kruskal/">Kruskal<sup>1</sup></a><a href="/tags/%E5%9B%A0%E5%AD%90/">因子<sup>1</sup></a><a href="/tags/deep-learning/">deep learning<sup>1</sup></a><a href="/tags/%E7%9F%A9%E9%98%B5/">矩阵<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2026/03/"><span class="date">2026/03</span><div class="count-group"><span class="count">62</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">62</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/%E6%A8%A1%E6%8B%9F/">模拟<sup>9</sup></a><a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础<sup>10</sup></a><a href="/tags/%E5%9B%A0%E6%95%B0/">因数<sup>1</sup></a><a href="/tags/%E5%9B%BE/">图<sup>1</sup></a><a href="/tags/%E6%A0%91/">树<sup>1</sup></a><a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集<sup>3</sup></a><a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划<sup>3</sup></a><a href="/tags/%E9%80%92%E5%BD%92/">递归<sup>4</sup></a><a href="/tags/%E8%BF%9B%E5%88%B6/">进制<sup>2</sup></a><a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串<sup>3</sup></a><a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习<sup>3</sup></a><a href="/tags/CNN/">CNN<sup>1</sup></a><a href="/tags/%E6%97%A5%E6%9C%9F%E9%97%AE%E9%A2%98/">日期问题<sup>3</sup></a><a href="/tags/%E6%A0%88/">栈<sup>1</sup></a><a href="/tags/%E6%9F%A5%E6%89%BE/">查找<sup>2</sup></a><a href="/tags/%E6%8E%92%E5%BA%8F/">排序<sup>1</sup></a><a href="/tags/%E6%9E%9A%E4%B8%BE/">枚举<sup>3</sup></a><a href="/tags/%E5%9B%9E%E6%96%87/">回文<sup>1</sup></a><a href="/tags/%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/">连通分量<sup>1</sup></a><a href="/tags/STL/">STL<sup>2</sup></a><a href="/tags/list/">list<sup>1</sup></a><a href="/tags/vector/">vector<sup>1</sup></a><a href="/tags/%E6%9A%B4%E5%8A%9B/">暴力<sup>1</sup></a><a href="/tags/%E7%B4%A0%E6%95%B0/">素数<sup>3</sup></a><a href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/">快速幂<sup>2</sup></a><a href="/tags/%E9%98%9F%E5%88%97/">队列<sup>1</sup></a><a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">最小生成树<sup>1</sup></a><a href="/tags/Kruskal/">Kruskal<sup>1</sup></a><a href="/tags/%E5%9B%A0%E5%AD%90/">因子<sup>1</sup></a><a href="/tags/deep-learning/">deep learning<sup>1</sup></a><a href="/tags/%E7%9F%A9%E9%98%B5/">矩阵<sup>1</sup></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a href="/" title="返回博客主页" id="site-name"><span class="title">Solitude</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">pytorch数据集的下载和读取</a></div></div><div id="menus"></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>深度学习</span></a></div></div></div></div><h1 class="post-title">pytorch数据集的下载和读取</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><div class="post-radius-bottom"></div><article class="post-content article-container"><h1>PyTorch <strong>数据集 + 数据加载</strong> 超清晰入门讲解</h1>
+<p>完全按照你现在的代码来讲，<strong>从零开始、一步到位、专门给新手</strong>，学完你就能彻底看懂这段代码，也能自己写。</p>
+<p>我分成 <strong>3 个核心部分</strong>：</p>
+<ol>
+<li><strong>datasets 是什么？干什么用？</strong></li>
+<li><strong>DataLoader 是什么？干什么用？</strong></li>
+<li><strong>逐行解释你这段代码</strong></li>
+</ol>
+<h1>一、先搞懂：为什么需要这两个东西？</h1>
+<p>深度学习训练 = <strong>喂数据给模型</strong></p>
+<p>但数据不能一张一张喂，必须：</p>
+<ul>
+<li>打包成批（batch）</li>
+<li>打乱顺序</li>
+<li>高效读取</li>
+<li>自动预处理</li>
+</ul>
+<p>所以 PyTorch 设计了两个神器：</p>
+<ul>
+<li><strong>Dataset（数据集）</strong>：管“数据从哪来、长什么样”</li>
+<li><strong>DataLoader（数据加载器）</strong>：管“怎么批量、怎么打乱、怎么读取”</li>
+</ul>
+<h1>二、第一步：torchvision.datasets</h1>
+<h2 id="官方定义">官方定义</h2>
+<p><strong>datasets = 官方提前做好的标准数据集库</strong></p>
+<p>你现在用的是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">datasets.MNIST(...)</span><br></pre></td></tr></table></figure>
+<p>它能干 4 件事：</p>
+<ol>
+<li><strong>自动下载 MNIST 数据集</strong>（训练图 + 标签）</li>
+<li><strong>区分训练集 / 测试集</strong></li>
+<li><strong>自动把图片和标签对应起来</strong></li>
+<li><strong>自动调用你写的 transform 预处理（转张量 + 标准化）</strong></li>
+</ol>
+<p>一句话：</p>
+<p><strong>datasets 帮你把数据准备好，变成模型能用的格式。</strong></p>
+<h1>三、第二步：torch.utils.data.DataLoader</h1>
+<h2 id="官方定义-2">官方定义</h2>
+<p><strong>DataLoader = 数据的“搬运工 + 打包机”</strong></p>
+<p>它的作用超级重要：</p>
+<ol>
+<li><strong>把大数据切成一个个 batch</strong></li>
+<li><strong>自动打乱数据（shuffle）</strong></li>
+<li><strong>多线程加速读取</strong></li>
+<li><strong>训练时一个 batch 一个 batch 喂给模型</strong></li>
+</ol>
+<p>你训练时用的就是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> images, labels <span class="keyword">in</span> train_loader:</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h1>四、逐行精讲你的代码（最关键）</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一次喂给模型 64 张图</span></span><br><span class="line">batch_size = <span class="number">64</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 预处理（转张量 + 标准化）</span></span><br><span class="line">transform = transforms.Compose([</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 构建数据集（官方MNIST）</span></span><br><span class="line">train_dataset = datasets.MNIST(</span><br><span class="line">    root=<span class="string">&#x27;./dataset/mnist/&#x27;</span>,   <span class="comment"># 数据下载存放路径</span></span><br><span class="line">    train=<span class="literal">True</span>,                <span class="comment"># True=训练集，False=测试集</span></span><br><span class="line">    download=<span class="literal">True</span>,              <span class="comment"># 没有数据就自动下载</span></span><br><span class="line">    transform=transform         <span class="comment"># 自动做预处理</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 构建数据加载器（批量读取）</span></span><br><span class="line">train_loader = DataLoader(</span><br><span class="line">    train_dataset,        <span class="comment"># 用哪个数据集</span></span><br><span class="line">    batch_size=batch_size, <span class="comment"># 每个batch 64张图</span></span><br><span class="line">    shuffle=<span class="literal">True</span>          <span class="comment"># 训练前打乱顺序（必须True）</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1>五、超直白比喻（10秒理解）</h1>
+<ul>
+<li><strong>Dataset</strong> = <strong>一整仓库的货物</strong>（60000 张 MNIST 图片）</li>
+<li><strong>DataLoader</strong> = <strong>搬运机器人</strong></li>
+<li><strong>batch_size=64</strong> = <strong>一次搬 64 箱</strong></li>
+<li><strong>shuffle=True</strong> = <strong>每次搬之前打乱顺序</strong></li>
+</ul>
+<p>模型训练 = 机器人不断把打包好的货物送进工厂。</p>
+<h1>六、最核心的 4 个参数（必须背）</h1>
+<h2 id="datasets-MNIST-4-个参数">datasets.MNIST 4 个参数</h2>
+<ol>
+<li><code>root</code>：数据存在哪</li>
+<li><code>train=True/False</code>：训练集还是测试集</li>
+<li><code>download=True</code>：没有就自动下载</li>
+<li><code>transform</code>：预处理函数</li>
+</ol>
+<h2 id="DataLoader-3-个参数">DataLoader 3 个参数</h2>
+<ol>
+<li><code>dataset</code>：用哪个数据集</li>
+<li><code>batch_size</code>：一次喂多少张图</li>
+<li><code>shuffle=True</code>：训练集必须打乱（提高泛化能力）</li>
+</ol>
+<h1>七、训练时怎么用？（你马上会写）</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 循环从 loader 里取数据</span></span><br><span class="line"><span class="keyword">for</span> images, labels <span class="keyword">in</span> train_loader:</span><br><span class="line">    <span class="comment"># images: 形状 (64, 1, 28, 28)  → 64张图</span></span><br><span class="line">    <span class="comment"># labels: 形状 (64,)           → 64个数字标签</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 这里写前向传播、损失、梯度...</span></span><br></pre></td></tr></table></figure>
+<h1>八、超级总结（复习专用）</h1>
+<ul>
+<li><strong>Dataset</strong>：提供数据 + 预处理</li>
+<li><strong>DataLoader</strong>：批量 + 打乱 + 加载</li>
+<li><strong>MNIST</strong>：手写数字数据集</li>
+<li><strong>batch_size</strong>：一次训练多少张图</li>
+<li><strong>shuffle=True</strong>：训练集必须打乱</li>
+</ul>
+<p>本文针对MNIST手写数字数据集加载代码，系统讲解PyTorch中Dataset和DataLoader的核心概念、用法、参数、注意事项与实战技巧，适配深度学习入门学习，后续复习可直接对照查阅，全程衔接前文图像预处理内容，逻辑连贯易懂。</p>
+<p><strong>核心定位</strong>：Dataset负责管理单条数据（读取+预处理），DataLoader负责批量加载数据（打包+打乱+高效投喂），二者是PyTorch深度学习数据加载的标准组合，所有CV、NLP任务通用，是模型训练的必备前置步骤。</p>
+<h1>一、核心代码原文（对照学习）</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据加载核心配置</span></span><br><span class="line">batch_size = <span class="number">64</span></span><br><span class="line"><span class="comment"># 沿用之前的图像预处理流水线</span></span><br><span class="line">transform = transforms.Compose([</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))</span><br><span class="line">])</span><br><span class="line"><span class="comment"># 构建MNIST训练数据集</span></span><br><span class="line">train_dataset = datasets.MNIST(root=<span class="string">&#x27;./dataset/mnist/&#x27;</span>, train=<span class="literal">True</span>, download=<span class="literal">True</span>, transform=transform)</span><br><span class="line"><span class="comment"># 构建数据加载器，批量投喂数据</span></span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h1>二、torchvision.datasets 详解</h1>
+<h2 id="1-基础概念">1. 基础概念</h2>
+<p><code>torchvision.datasets</code>是PyTorch官方封装的<strong>标准视觉数据集工具库</strong>，内置MNIST、CIFAR10/100、ImageNet等常用数据集，无需手动下载整理数据，直接调用即可快速构建数据集对象，核心作用是<strong>将原始数据与预处理绑定，实现单条数据的标准化读取</strong>。</p>
+<p>自定义数据集也会继承Dataset父类，官方预置数据集是入门最便捷的选择，本次用到的<code>datasets.MNIST</code>是手写数字分类专属数据集。</p>
+<h2 id="2-MNIST数据集核心参数（逐行精讲）">2. MNIST数据集核心参数（逐行精讲）</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">取值</th>
+<th style="text-align:left">含义与作用</th>
+<th style="text-align:left">注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>root</strong></td>
+<td style="text-align:left">./dataset/mnist/</td>
+<td style="text-align:left">指定数据集的本地存储路径，下载的原始数据、解压后文件都会存放在此目录</td>
+<td style="text-align:left">路径尽量用相对路径，避免中文和特殊字符，文件夹会自动创建</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>train</strong></td>
+<td style="text-align:left">True/False</td>
+<td style="text-align:left">区分训练集和测试集；True=加载6万张训练图片，False=加载1万张测试图片</td>
+<td style="text-align:left">训练模型必须分开加载，训练集用于拟合参数，测试集用于评估效果</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>download</strong></td>
+<td style="text-align:left">True/False</td>
+<td style="text-align:left">True=本地无数据时自动从官方服务器下载，False=仅读取本地已有数据</td>
+<td style="text-align:left">首次运行设为True，下载完成后改False，避免重复下载；网络差可手动下载后放入root路径</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>transform</strong></td>
+<td style="text-align:left">前文定义的transform</td>
+<td style="text-align:left">绑定图像预处理操作，读取图片后自动执行ToTensor+标准化</td>
+<td style="text-align:left">必须在构建Dataset时传入，数据加载时自动执行，无需手动调用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-关键特性">3. 关键特性</h2>
+<ul>
+<li>数据集对象是<strong>可迭代对象</strong>，可通过索引单取一条数据（例：img, label = train_dataset[0]）</li>
+<li>自动完成图像与标签的配对，每张图片对应一个0-9的数字标签</li>
+<li>预处理transform仅作用于图像，标签保持原始数值不变</li>
+</ul>
+<h1>三、torch.utils.data.DataLoader 详解</h1>
+<h2 id="1-基础概念-2">1. 基础概念</h2>
+<p>DataLoader是PyTorch的<strong>数据批量加载器</strong>，相当于数据的“搬运打包工”，核心作用是将完整的数据集拆分成小批量（batch），实现高效、有序地向模型投喂数据，解决了单条数据加载慢、无法批量训练、模型过拟合的问题。</p>
+<p>深度学习模型采用小批量梯度下降（Mini-batch GD）训练，必须依靠DataLoader实现批量处理，是训练循环的核心入口。</p>
+<h2 id="2-核心参数（逐行精讲）">2. 核心参数（逐行精讲）</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">取值</th>
+<th style="text-align:left">含义与作用</th>
+<th style="text-align:left">必记注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>dataset</strong></td>
+<td style="text-align:left">train_dataset</td>
+<td style="text-align:left">指定要加载的数据集对象，即前文构建的MNIST数据集</td>
+<td style="text-align:left">必须传入Dataset类型对象，不可直接传入原始数据</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>batch_size</strong></td>
+<td style="text-align:left">64</td>
+<td style="text-align:left">批量大小，每次向模型输入64张图片+对应标签</td>
+<td style="text-align:left">数值根据显存调整，常见16/32/64/128；显存小则调小，避免显存溢出</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>shuffle</strong></td>
+<td style="text-align:left">True/False</td>
+<td style="text-align:left">是否打乱数据顺序；True=每个epoch打乱数据，False=保持原有顺序</td>
+<td style="text-align:left"><strong>训练集必须设为True</strong>，打乱数据可提升模型泛化能力，防止过拟合；测试集必须设为False，保证评估顺序固定</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-常用扩展参数（进阶必备，复习备用）">3. 常用扩展参数（进阶必备，复习备用）</h2>
+<ul>
+<li><code>num_workers</code>：多线程加载数据，加快读取速度，Windows系统建议设为0，Linux/Mac可设为2-4，避免线程卡死</li>
+<li><code>drop_last</code>：是否丢弃最后一个不完整批次，设为True可避免batch_size不一致导致的报错，默认False</li>
+<li><code>pin_memory</code>：锁页内存，加快数据从CPU到GPU的传输速度，使用GPU训练时建议设为True</li>
+</ul>
+<h2 id="4-输出数据形状（必懂，调试常用）">4. 输出数据形状（必懂，调试常用）</h2>
+<p>通过DataLoader迭代取出的批量数据，包含图像张量和标签两个部分，形状固定：</p>
+<ul>
+<li>图像images：<code>torch.Size([64, 1, 28, 28])</code> → 含义：[batch_size, 通道数, 高度, 宽度]</li>
+<li>标签labels：<code>torch.Size([64])</code> → 含义：[batch_size]，64个对应图片的数字标签</li>
+</ul>
+<h1>四、完整数据加载规范（训练集+测试集，实战直接用）</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms, datasets</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 统一配置参数</span></span><br><span class="line">batch_size = <span class="number">64</span></span><br><span class="line"><span class="comment"># 预处理（训练、测试集共用同一套，保证数据分布一致）</span></span><br><span class="line">transform = transforms.Compose([</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 构建训练集 + 训练加载器</span></span><br><span class="line">train_dataset = datasets.MNIST(root=<span class="string">&#x27;./dataset/mnist&#x27;</span>, train=<span class="literal">True</span>, download=<span class="literal">True</span>, transform=transform)</span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>, num_workers=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 构建测试集 + 测试加载器（核心区别：train=False, shuffle=False）</span></span><br><span class="line">test_dataset = datasets.MNIST(root=<span class="string">&#x27;./dataset/mnist&#x27;</span>, train=<span class="literal">False</span>, download=<span class="literal">True</span>, transform=transform)</span><br><span class="line">test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=<span class="literal">False</span>, num_workers=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h1>五、训练循环中使用方法（核心实战）</h1>
+<p>DataLoader是训练循环的入口，通过for循环迭代取出批量数据，是模型前向传播、计算损失、更新参数的基础：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简化版训练循环</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(训练轮数):  <span class="comment"># 迭代多轮训练</span></span><br><span class="line">    <span class="keyword">for</span> images, labels <span class="keyword">in</span> train_loader:  <span class="comment"># 遍历所有批次数据</span></span><br><span class="line">        <span class="comment"># 1. 将数据移至GPU（可选）</span></span><br><span class="line">        <span class="comment"># images = images.to(device)</span></span><br><span class="line">        <span class="comment"># labels = labels.to(device)</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 2. 模型前向传播、计算损失、反向传播、优化参数</span></span><br><span class="line">        <span class="comment"># 此处衔接后续模型训练代码</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h1>六、必记注意事项与常见误区（避坑重点，复习必看）</h1>
+<p><strong>1. shuffle参数误区</strong>：训练集shuffle=True，测试集绝对不能设为True，必须设为False，否则测试结果无参考意义，无法客观评估模型性能。</p>
+<p><strong>2. batch_size选择</strong>：不是越大越好，根据电脑显存/内存调整，过小训练波动大，过大占用资源多，入门优先用32/64。</p>
+<p><strong>3. 下载失败解决</strong>：download=True报错时，关闭代理，更换网络，或手动下载MNIST数据集放入root指定路径。</p>
+<p><strong>4. 预处理一致性</strong>：训练集和测试集必须用完全相同的transform预处理，不可随意修改均值标准差和变换步骤，保证数据分布统一。</p>
+<p><strong>5. num_workers适配</strong>：Windows系统用户务必设为0，否则会出现多线程报错、程序卡死，Linux系统可正常设置多线程。</p>
+<p><strong>6. 数据顺序</strong>：先构建Dataset，再传入DataLoader，顺序不可颠倒。</p>
+<h1>七、核心总结（快速复盘口诀）</h1>
+<p>数据集管<strong>单条数据</strong>，加载器管<strong>批量投喂</strong>；</p>
+<p>训练打乱测不打乱，预处理前后要统一；</p>
+<p>批量大小看显存，多线程Windows要归零；</p>
+<p>循环迭代取批次，模型训练第一步。</p>
+<ul>
+<li></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Kevin</div><div class="post-copyright__author_desc">向死而生</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Kevin的世界</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>深度学习<span class="tagsPageCount">3</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/03/22/KY18-%E4%BB%8A%E5%B9%B4%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9%EF%BC%9F/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">KY18 今年的第几天？</div></div></a></div><div class="next-post pull-right"><a href="/2026/03/22/%E5%9B%BE%E5%83%8F%E9%A2%84%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">图像预处理函数transforms</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/logo.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Kevin</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">PyTorch 数据集 + 数据加载 超清晰入门讲解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、先搞懂：为什么需要这两个东西？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、第一步：torchvision.datasets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%AE%9A%E4%B9%89"><span class="toc-text">官方定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、第二步：torch.utils.data.DataLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%AE%9A%E4%B9%89-2"><span class="toc-text">官方定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、逐行精讲你的代码（最关键）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">五、超直白比喻（10秒理解）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">六、最核心的 4 个参数（必须背）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#datasets-MNIST-4-%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-text">datasets.MNIST 4 个参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataLoader-3-%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-text">DataLoader 3 个参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">七、训练时怎么用？（你马上会写）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">八、超级总结（复习专用）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、核心代码原文（对照学习）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、torchvision.datasets 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">1. 基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-MNIST%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%EF%BC%88%E9%80%90%E8%A1%8C%E7%B2%BE%E8%AE%B2%EF%BC%89"><span class="toc-text">2. MNIST数据集核心参数（逐行精讲）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="toc-text">3. 关键特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、torch.utils.data.DataLoader 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-2"><span class="toc-text">1. 基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%EF%BC%88%E9%80%90%E8%A1%8C%E7%B2%BE%E8%AE%B2%EF%BC%89"><span class="toc-text">2. 核心参数（逐行精讲）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%B8%B8%E7%94%A8%E6%89%A9%E5%B1%95%E5%8F%82%E6%95%B0%EF%BC%88%E8%BF%9B%E9%98%B6%E5%BF%85%E5%A4%87%EF%BC%8C%E5%A4%8D%E4%B9%A0%E5%A4%87%E7%94%A8%EF%BC%89"><span class="toc-text">3. 常用扩展参数（进阶必备，复习备用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BE%93%E5%87%BA%E6%95%B0%E6%8D%AE%E5%BD%A2%E7%8A%B6%EF%BC%88%E5%BF%85%E6%87%82%EF%BC%8C%E8%B0%83%E8%AF%95%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="toc-text">4. 输出数据形状（必懂，调试常用）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、完整数据加载规范（训练集+测试集，实战直接用）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">五、训练循环中使用方法（核心实战）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">六、必记注意事项与常见误区（避坑重点，复习必看）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">七、核心总结（快速复盘口诀）</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2026/03/22/%E6%95%B0%E7%9A%84%E5%90%84%E5%9B%A0%E5%AD%90%E4%B9%8B%E5%92%8C/" title="数的各因子之和"><div class="content"><span class="title" href="/2026/03/22/%E6%95%B0%E7%9A%84%E5%90%84%E5%9B%A0%E5%AD%90%E4%B9%8B%E5%92%8C/" title="数的各因子之和">数的各因子之和</span></div></a><a class="aside-list-item" href="/2026/03/22/%E8%BF%99%E6%98%AF%E4%BB%8A%E5%B9%B4%E7%9A%84%E6%98%9F%E6%9C%9F%E5%87%A0%EF%BC%9F/" title="这是今年的星期几？"><div class="content"><span class="title" href="/2026/03/22/%E8%BF%99%E6%98%AF%E4%BB%8A%E5%B9%B4%E7%9A%84%E6%98%9F%E6%9C%9F%E5%87%A0%EF%BC%9F/" title="这是今年的星期几？">这是今年的星期几？</span></div></a><a class="aside-list-item" href="/2026/03/22/KY110-%E6%97%A5%E6%9C%9F%E5%B7%AE%E5%80%BC/" title="KY110 日期差值"><div class="content"><span class="title" href="/2026/03/22/KY110-%E6%97%A5%E6%9C%9F%E5%B7%AE%E5%80%BC/" title="KY110 日期差值">KY110 日期差值</span></div></a><a class="aside-list-item" href="/2026/03/22/HUSTKY118-%E6%89%93%E5%8D%B0%E6%97%A5%E6%9C%9F/" title="HUSTKY118 打印日期"><div class="content"><span class="title" href="/2026/03/22/HUSTKY118-%E6%89%93%E5%8D%B0%E6%97%A5%E6%9C%9F/" title="HUSTKY118 打印日期">HUSTKY118 打印日期</span></div></a><a class="aside-list-item" href="/2026/03/22/KY18-%E4%BB%8A%E5%B9%B4%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9%EF%BC%9F/" title="KY18 今年的第几天？"><div class="content"><span class="title" href="/2026/03/22/KY18-%E4%BB%8A%E5%B9%B4%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9%EF%BC%9F/" title="KY18 今年的第几天？">KY18 今年的第几天？</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2026 By<a class="footer-bar-link" href="/" title="Kevin">Kevin</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="/js/tw_cn.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/copy-tex.min.js"><script>(() => {
+  document.querySelectorAll('.article-container span.katex-display').forEach(item => {
+    utils.wrap(item, 'div', {class: 'katex-wrap'})
+  })
+})();
+</script></script><!-- UI enhancement scripts--><script defer src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><!-- Music player scripts--><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><div class="js-pjax"></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--></body></html>
+        <script>
+            const posts = ["2026/03/22/数的各因子之和/","2026/03/22/这是今年的星期几？/","2026/03/22/KY110-日期差值/","2026/03/22/HUSTKY118-打印日期/","2026/03/22/KY18-今年的第几天？/","2026/03/22/数据集的下载和读取/","2026/03/22/图像预处理函数/","2026/03/22/CNN/","2026/03/21/最小生成树构造/","2026/03/20/SJUKY126-第一题/","2026/03/20/3409-这是一棵树吗/","2026/03/20/ZJUKY110-畅通工程/","2026/03/20/PKUKY120-吃糖果/","2026/03/20/3428-放苹果/","2026/03/19/质因子数个数/","2026/03/19/矩阵快速幂/","2026/03/19/快速幂/","2026/03/17/TSINGK129-任意进制相互转换/","2026/03/17/3530-二进制数/","2026/03/17/例题1201质数（清华大学复试上机题）/","2026/03/17/习题0603全排列（北京大学复试上机题）/","2026/03/16/习题0601骨牌-复旦大学复试上机题/","2026/03/16/例题0601不连续1的子串-中山大学复试上机题/","2026/03/16/例题0600跳台阶-复旦大学复试上机题/","2026/03/12/3678-模拟出入栈游戏/","2026/03/12/KY179-堆栈的使用/","2026/03/12/习题0110Hello-World-for-U（浙江大学复试上机题）/","2026/03/12/例题0104叠筐-（HDU-2074）/","2026/03/12/例题0103打印数字菱形/","2026/03/12/习题0108买房子（北京大学复试上机题）/","2026/03/12/习题0106递推数列（清华大学复试上机题）/","2026/03/12/习题0105特殊乘法（清华大学复试上机题）/","2026/03/12/XXX定律-（浙江大学复试上机题）/","2026/03/12/old bill/","2026/03/12/水仙花数/","2026/03/12/素数和半素数的判断/","2026/03/11/3377-约数的个数/","2026/03/11/TSINGK131-对称平方数1/","2026/03/11/PKUKY122-与7无关的数/","2026/03/11/list常用工具函数实现教学/","2026/03/11/vector常用工具函数实现教学/","2026/03/09/排队打饭/","2026/03/08/3254-约瑟夫问题No-2/","2026/03/08/PKUKY129-首字母大写/","2026/03/07/PKUKY117-skew数/","2026/03/07/SJUKY122-字母统计/","2026/03/07/3608-大整数排序/","2026/03/07/3544-寻找变化前的01序列/","2026/03/07/3405-W的密码/","2026/03/07/PKUKY150-浮点数加法/","2026/03/07/3615-单词个数统计/","2026/03/06/3437-打印极值点下标/","2026/03/06/KY197 找最小数/","2026/03/06/找位置/","2026/03/06/3542-查找/","2026/03/06/找X/","2026/03/06/ZJUKY101-奥运排序问题/","2026/03/06/PKUKY109-小白鼠排队/","2026/03/05/测试数学公式/","2026/03/05/深度学习心得笔记/","2026/03/05/深度学习笔记/","2026/03/05/hello-world/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
